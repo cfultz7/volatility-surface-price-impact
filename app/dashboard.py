@@ -73,11 +73,12 @@ if page == "Overview":
              "measured strictly **before** the pressure; the price response strictly **after** it.")
     if res:
         p, fc, g = res["final"]["primary"], res["forecast"], res["gates"]
-        a, b, c, d = st.columns(4)
-        a.metric("δ_sell (bps per SD × SD)", f"{p['delta_sell']:+.3f}")
-        b.metric("95% block-bootstrap CI", f"[{p['ci_basic'][0]:.2f}, {p['ci_basic'][1]:.2f}]")
+        a, b = st.columns(2)
+        a.metric("δ_sell (bps per SD²)", f"{p['delta_sell']:+.3f}")
+        b.metric("95% CI (block bootstrap)", f"[{p['ci_basic'][0]:.2f}, {p['ci_basic'][1]:.2f}]")
+        c, d = st.columns(2)
         c.metric("Two-sided p", f"{p['p_null_centered']:.2f}")
-        d.metric("Final-period sessions", f"{p['sessions']}")
+        d.metric("Final sessions", f"{p['sessions']}")
         lo, hi = p["ci_basic"]
         verdict = ("The interval includes zero: the data do not show that downside skew changes the "
                    "response to selling pressure." if lo <= 0 <= hi else
@@ -165,14 +166,16 @@ elif page == "Method demo (synthetic)":
         st.error(R["error"])
         st.stop()
     t, sa, sb = R["truth"], R["A"], R["B"]
-    m1, m2, m3, m4 = st.columns(4)
-    m1.metric("True SK30 (vol pts)", f"{100 * t['sk30']:.3f}")
+    st.caption("SK30 and ATM IV in vol points; the small number under each estimate is its error vs the truth.")
+    m1, m2 = st.columns(2)
+    m1.metric("True SK30", f"{100 * t['sk30']:.3f}")
     m2.metric("Method A SK30", f"{100 * sa.sk30:.3f}" if sa and sa.ok else "n/a",
               f"{100 * (sa.sk30 - t['sk30']):+.3f}" if sa and sa.ok else None, delta_color="off")
-    m3.metric("Method B (SVI) SK30", f"{100 * sb.sk30:.3f}" if sb and sb.ok else "n/a",
+    m3, m4 = st.columns(2)
+    m3.metric("SVI SK30", f"{100 * sb.sk30:.3f}" if sb and sb.ok else "n/a",
               f"{100 * (sb.sk30 - t['sk30']):+.3f}" if sb and sb.ok else None, delta_color="off")
-    m4.metric("Method A ATM IV (%)", f"{100 * sa.atm_iv:.2f}" if sa and sa.ok else "n/a",
-              f"{100 * (sa.atm_iv - t['atm']):+.2f} vs true {100 * t['atm']:.2f}" if sa and sa.ok else None,
+    m4.metric("Method A ATM IV", f"{100 * sa.atm_iv:.2f}" if sa and sa.ok else "n/a",
+              f"{100 * (sa.atm_iv - t['atm']):+.2f} (true {100 * t['atm']:.2f})" if sa and sa.ok else None,
               delta_color="off")
 
     import plotly.graph_objects as go

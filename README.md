@@ -1,6 +1,7 @@
 ﻿# Volatility Surface Skew & State-Dependent Price Impact
 
 [![ci](https://github.com/cfultz7/volatility-surface-price-impact/actions/workflows/ci.yml/badge.svg)](https://github.com/cfultz7/volatility-surface-price-impact/actions/workflows/ci.yml)
+[![Streamlit demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://volatility-skew-price-impact.streamlit.app)
 
 **Question.** Does the 30-day downside skew of the S&P 500 options surface (SPXW), measured strictly
 before an interval of order-flow pressure in E-mini S&P 500 futures (ES), go with a different
@@ -34,6 +35,8 @@ strategy. See `paper/manuscript.md` / `outputs/main/paper.pdf` and `outputs/main
 > with event-level OFI. See `docs/decisions.md`.
 
 ## Interactive demo
+**Live:** https://volatility-skew-price-impact.streamlit.app
+
 `app/dashboard.py` is a Streamlit app with six pages:
 
 - **Overview:** the headline result.
