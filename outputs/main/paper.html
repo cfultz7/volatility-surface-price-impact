@@ -1063,7 +1063,7 @@ standard deviations (at most 0.11 vol points) are small next to the pretest skew
 <li>The last observation of each session is dropped at h = 15 by an over-conservative endpoint mask (1 of 366 rows per session; secondary horizon only; D-024).</li>
 <li>Midquote returns are not tradable P&amp;L, and no causal mechanism is identified.</li>
 <li>The literature review is verified at the bibliographic and abstract level only.</li>
-<li>The pipeline was tested on Windows only.</li>
+<li>The full data pipeline was run on Windows only; the offline test suite also passes on Ubuntu and macOS (GitHub Actions).</li>
 </ul>
 <h2>11. Conclusion</h2>
 <p>The 95% block-bootstrap interval includes zero, so the primary null of no sell-pressure × skew interaction is not rejected at the 5% level. The result is inconclusive about the interaction, not evidence that it is exactly zero. The interaction is small relative to return dispersion and is stable across surface
@@ -1610,7 +1610,7 @@ intervals (5-session blocks, 1,999 replications). Rank and conditioning: rank
 <ul>
 <li><strong>Costs:</strong> total $25.48 (metadata-estimate basis). By schema: {"bbo-1s": 9.38, "cbbo-1m": 7.056, "definition": 7.893, "mbp-1": 0.623, "ohlcv-1d": 0.003, "status": 0.0}. Failed downloads counted conservatively: $1.31, plus $0.53 from earlier releases.</li>
 <li><strong>Design freeze:</strong> 2026-11-22T01:43:37.426790+00:00 UTC; source SHA-256 a348e12a46c3241518c46d09c17f5076c4c083b80676aac5b7cad6d4fcd65cd3; ledger SHA-256 8ad5f99fa1d1500ad0e9d12aec5c9eaa2d6e2c24bb98ac9e3eb63defa59aa3ad.</li>
-<li><strong>Environment:</strong> Python 3.12 (uv), databento 0.90.0, cvxpy 1.9.3 (CLARABEL), exchange_calendars 4.13.3, Windows 11 (the only tested platform).</li>
+<li><strong>Environment:</strong> Python 3.12 (uv), databento 0.90.0, cvxpy 1.9.3 (CLARABEL), exchange_calendars 4.13.3, Windows 11 for the full pipeline; offline tests also pass on Ubuntu and macOS in GitHub Actions.</li>
 <li><strong>Commands (in order):</strong> <code>surface_impact.planning</code>, <code>acquire</code>, <code>select_lambda</code>, <code>run_measure</code>, <code>analyze all</code>, <code>stress</code>, <code>diagnostics</code>, <code>expiry_sensitivity</code>, <code>figures</code>, <code>manuscript</code>, <code>writeups</code> (see README). All billable steps go through the cached, lock-protected ledger; reruns never pay twice.</li>
 <li><strong>Data rights:</strong> raw OPRA/CME data are licensed and not distributed. Derived aggregates and figures only.</li>
 <li><strong>Decisions:</strong> all deviations and choices are logged in <code>docs/decisions.md</code>. The key ones are D-014 (sampled flow), D-020 (λ), D-021 (estimation sample), D-022 (batch definitions), D-023 (freeze) and D-024 (post-freeze review findings).</li>

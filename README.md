@@ -1,5 +1,7 @@
 ﻿# Volatility Surface Skew & State-Dependent Price Impact
 
+[![ci](https://github.com/cfultz7/volatility-surface-price-impact/actions/workflows/ci.yml/badge.svg)](https://github.com/cfultz7/volatility-surface-price-impact/actions/workflows/ci.yml)
+
 **Question.** Does the 30-day downside skew of the S&P 500 options surface (SPXW), measured strictly
 before an interval of order-flow pressure in E-mini S&P 500 futures (ES), go with a different
 subsequent ES price response, after accounting for volatility, spread, depth and recent returns?
@@ -66,9 +68,9 @@ To host it on Streamlit Community Cloud, create an app from this repository with
 uv sync --extra dashboard
 uv run pytest -q
 ```
-Python 3.12 via `uv`. 50 tests (synthetic plus, when a local run exists, paper/table consistency checks).
-Tested on Windows 11 only. A GitHub Actions matrix (Ubuntu/Windows/macOS) is configured in
-`.github/workflows/ci.yml` but has not been run.
+Python 3.12 via `uv`. 50 tests (synthetic, plus paper/table consistency checks against the committed
+results). The full data pipeline was run on Windows 11. The offline test suite and `vsimpact demo` pass on
+Ubuntu, Windows and macOS in GitHub Actions (`.github/workflows/ci.yml`).
 
 ## Reproduce
 You need your own Databento account. Put `DATABENTO_API_KEY=...` in a local `.env` (gitignored), and

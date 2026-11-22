@@ -598,7 +598,7 @@ standard deviations (at most 0.11 vol points) are small next to the pretest skew
 - The last observation of each session is dropped at h = 15 by an over-conservative endpoint mask (1 of 366 rows per session; secondary horizon only; D-024).
 - Midquote returns are not tradable P&L, and no causal mechanism is identified.
 - The literature review is verified at the bibliographic and abstract level only.
-- The pipeline was tested on Windows only.
+- The full data pipeline was run on Windows only; the offline test suite also passes on Ubuntu and macOS (GitHub Actions).
 
 ## 11. Conclusion
 The 95% block-bootstrap interval includes zero, so the primary null of no sell-pressure × skew interaction is not rejected at the 5% level. The result is inconclusive about the interaction, not evidence that it is exactly zero. The interaction is small relative to return dispersion and is stable across surface
