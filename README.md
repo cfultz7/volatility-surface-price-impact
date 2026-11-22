@@ -1,4 +1,4 @@
-﻿# Volatility Surface Skew & State-Dependent Price Impact
+# Volatility Surface Skew & State-Dependent Price Impact
 
 [![ci](https://github.com/cfultz7/volatility-surface-price-impact/actions/workflows/ci.yml/badge.svg)](https://github.com/cfultz7/volatility-surface-price-impact/actions/workflows/ci.yml)
 [![Streamlit demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://volatility-skew-price-impact.streamlit.app)
@@ -60,7 +60,7 @@ To host it on Streamlit Community Cloud, create an app from this repository with
 | `src/surface_impact/` | data access & budget ledger, calendars/rolls, contract selection, pricing, parity, surfaces (Method A QP, Method B SVI), skew, OFI, alignment, features, regressions, bootstrap inference, analysis driver, figures, manuscript |
 | `tests/` | offline synthetic tests (no billable calls) |
 | `configs/` | protocol, budget, planning reference |
-| `docs/` | protocol, literature review, novelty audit, data dictionary, decisions, interview guide |
+| `docs/` | protocol, literature review, novelty audit, data dictionary, decisions |
 | `paper/` | manuscript (Markdown + LaTeX source), references, summary |
 | `app/dashboard.py` | Streamlit dashboard over saved artifacts |
 | `outputs/main/` | derived tables, figures, freeze manifest, paper HTML/PDF |

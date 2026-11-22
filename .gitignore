@@ -30,3 +30,10 @@ configs/planning_es_reference.json
 *.log
 outputs/planning_test/
 outputs/planning/selected_symbols/
+
+# personal / internal (local only)
+paper/linkedin_draft.md
+paper/resume_bullets.md
+docs/interview_guide.md
+PROJECT_STATE.md
+src/surface_impact/writeups.py
