@@ -145,27 +145,57 @@ def svi_init(obs: SmileObs, tau: float, atm_iv_guess: float = 0.18):
     return np.array([0.5 * w0, 0.1 * max(np.sqrt(tau), 0.05), -0.5, 0.0, 0.1])
 
 
-def fit_method_b(obs: SmileObs, tau: float, warm: np.ndarray | None = None) -> FitB:
+FAST_REFINE_NFEV = 300  # fast mode: ~9x faster; SK30 within ~0.001 vol pts of the frozen fit
+
+
+def svi_jac(k, p):
+    """Analytic Jacobian of raw SVI total variance w.r.t. (a, b, rho, m, sigma)."""
+    a, b, rho, m, sig = p
+    d = k - m
+    r = np.sqrt(d**2 + sig**2)
+    return np.column_stack([np.ones_like(k), rho * d + r, b * d, b * (-rho - d / r), b * sig / r])
+
+
+def fit_method_b(obs: SmileObs, tau: float, warm: np.ndarray | None = None,
+                 fast: bool = False) -> FitB:
+    """fast=True: same objective, bounds, starts and checks, but analytic Jacobians and
+    vectorized initial implied variances (used by the interactive demo). The default
+    (fast=False) is the frozen numerics used for every reported result."""
     if len(np.unique(obs.x)) < 5:
         return FitB(False, reason="fewer than 5 distinct strikes")
     k = np.log(obs.x)
     h = np.maximum((obs.c_hi - obs.c_lo) / 2.0, SPREAD_FLOOR)
+    scale = h * np.sqrt(len(h))
 
     def resid(p):
         w = np.maximum(svi_w(k, p), 1e-12)
         return (norm_call(obs.x, w) - obs.c_mid) / h / np.sqrt(len(h))
 
+    def resid_jac(p):
+        w_raw = svi_w(k, p)
+        w = np.maximum(w_raw, 1e-12)
+        sw = np.sqrt(w)
+        d1 = (-k + 0.5 * w) / sw
+        dcdw = np.exp(-0.5 * d1**2) / math.sqrt(2 * math.pi) / (2 * sw)
+        dcdw = np.where(w_raw > 1e-12, dcdw, 0.0)
+        return (dcdw / scale)[:, None] * svi_jac(k, p)
+
     # Deterministic initialization: least-squares SVI on implied total variance of mids
     # (stage 1), then refinement in premium space with the spread-normalized loss (stage 2).
-    from .pricing import implied_w
+    from .pricing import implied_w, implied_w_vec
 
-    wk, kk = [], []
-    for xi, ci in zip(obs.x, obs.c_mid):
-        try:
-            wk.append(implied_w(float(ci), float(xi)))
-            kk.append(math.log(xi))
-        except ValueError:
-            pass
+    if fast:
+        wv = implied_w_vec(obs.c_mid, obs.x)
+        ok = np.isfinite(wv)
+        wk, kk = list(wv[ok]), list(k[ok])
+    else:
+        wk, kk = [], []
+        for xi, ci in zip(obs.x, obs.c_mid):
+            try:
+                wk.append(implied_w(float(ci), float(xi)))
+                kk.append(math.log(xi))
+            except ValueError:
+                pass
     starts = [warm] if warm is not None else []
     if len(wk) >= 5 and warm is None:
         wk, kk = np.array(wk), np.array(kk)
@@ -176,8 +206,13 @@ def fit_method_b(obs: SmileObs, tau: float, warm: np.ndarray | None = None) -> F
         best_w = None
         for p0 in grid:
             p0 = np.clip(p0, SVI_BOUNDS[0] + 1e-6, SVI_BOUNDS[1] - 1e-6)
-            r = least_squares(lambda p: (svi_w(kk, p) - wk) / wmin, p0, bounds=SVI_BOUNDS,
-                              method="trf", max_nfev=3000)
+            if fast:
+                r = least_squares(lambda p: (svi_w(kk, p) - wk) / wmin, p0, bounds=SVI_BOUNDS,
+                                  method="trf", max_nfev=300, x_scale="jac",
+                                  jac=lambda p: svi_jac(kk, p) / wmin)
+            else:
+                r = least_squares(lambda p: (svi_w(kk, p) - wk) / wmin, p0, bounds=SVI_BOUNDS,
+                                  method="trf", max_nfev=3000)
             if best_w is None or r.cost < best_w.cost:
                 best_w = r
         starts.append(best_w.x)
@@ -187,8 +222,9 @@ def fit_method_b(obs: SmileObs, tau: float, warm: np.ndarray | None = None) -> F
         p0 = np.clip(p0, SVI_BOUNDS[0] + 1e-6, SVI_BOUNDS[1] - 1e-6)
         try:
             r = least_squares(resid, p0, bounds=SVI_BOUNDS, method="trf",
-                              max_nfev=300 if warm is not None else 2000, x_scale="jac",
-                              ftol=1e-10, xtol=1e-10)
+                              max_nfev=300 if warm is not None else (FAST_REFINE_NFEV if fast else 2000),
+                              x_scale="jac",
+                              ftol=1e-10, xtol=1e-10, jac=resid_jac if fast else "2-point")
         except Exception:  # noqa: BLE001
             continue
         if not np.all(np.isfinite(r.x)):

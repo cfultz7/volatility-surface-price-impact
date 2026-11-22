@@ -70,7 +70,7 @@ Each entry: ID, date, decision, reason, and whether it departs from the specific
      applies the Cont-Kukanov-Stoikov increment between *consecutive bbo-1s records* (BBO state at
      each printed interval end), not between book events. It misses intra-second events and
      reversals, so it is a coarse approximation of event-level OFI. The manuscript, README,
-     dashboard and interview materials must not call it event-level OFI or "MBP-1 OFI".
+     dashboard and any summaries must not call it event-level OFI or "MBP-1 OFI".
   2. Spec §16's gate "event-level OFI … passed" cannot be met. The status ceiling for any
      result is therefore **"main analysis on sampled order flow (deviation D-014)"**, never an
      unqualified main-analysis-complete.

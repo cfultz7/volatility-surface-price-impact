@@ -871,7 +871,7 @@ intervals (5-session blocks, 1,999 replications). Rank and conditioning: rank
 - **Costs:** total ${spend:.2f} (metadata-estimate basis). By schema: {json.dumps(cst.get('by_schema_usd', {}))}. Failed downloads counted conservatively: ${cst.get('failed_download_conservative', float('nan')):.2f}, plus ${cst.get('legacy_conservative_releases', float('nan')):.2f} from earlier releases.
 - **Design freeze:** {F['frozen_utc']} UTC; source SHA-256 {F['source_sha256']}; ledger SHA-256 {F['acquisition_ledger_sha256']}.
 - **Environment:** Python 3.12 (uv), databento 0.90.0, cvxpy 1.9.3 (CLARABEL), exchange_calendars 4.13.3, Windows 11 for the full pipeline; offline tests also pass on Ubuntu and macOS in GitHub Actions.
-- **Commands (in order):** `surface_impact.planning`, `acquire`, `select_lambda`, `run_measure`, `analyze all`, `stress`, `diagnostics`, `expiry_sensitivity`, `figures`, `manuscript`, `writeups` (see README). All billable steps go through the cached, lock-protected ledger; reruns never pay twice.
+- **Commands (in order):** `surface_impact.planning`, `acquire`, `select_lambda`, `run_measure`, `analyze all`, `stress`, `diagnostics`, `expiry_sensitivity`, `figures`, `manuscript` (see README). All billable steps go through the cached, lock-protected ledger; reruns never pay twice.
 - **Data rights:** raw OPRA/CME data are licensed and not distributed. Derived aggregates and figures only.
 - **Decisions:** all deviations and choices are logged in `docs/decisions.md`. The key ones are D-014 (sampled flow), D-020 (λ), D-021 (estimation sample), D-022 (batch definitions), D-023 (freeze) and D-024 (post-freeze review findings).
 """

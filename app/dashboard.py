@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import math
+import time
 import sys
 from pathlib import Path
 
@@ -99,72 +100,117 @@ elif page == "Method demo (synthetic)":
     from surface_impact.surfaces import LAMBDA_GRID, SmileObs, fit_method_a, fit_method_b
 
     st.subheader("Method demo: from noisy option quotes to a 30-day 25-delta skew")
-    st.caption("SYNTHETIC data generated in your browser session. This illustrates the measurement "
-               "pipeline used in the paper; it is not market data and says nothing about the empirical result.")
-    c1, c2, c3 = st.columns(3)
-    atm = c1.slider("ATM implied vol (%)", 8.0, 40.0, 15.0, 0.5) / 100
-    slope = c1.slider("Skew slope (vol per unit log-moneyness)", -0.8, 0.3, -0.25, 0.05)
-    curv = c1.slider("Smile curvature", 0.0, 2.0, 0.4, 0.1)
-    d1 = c2.slider("Near expiry (days)", 14, 29, 27)
-    d2 = c2.slider("Far expiry (days)", 31, 60, 34)
-    spacing = c2.select_slider("Strike spacing (index points)", [5, 10, 25, 50], 10)
-    half = c3.slider("Quoted half-spread (index points)", 0.05, 3.0, 0.5, 0.05)
-    noise = c3.slider("Mid-price noise (share of half-spread)", 0.0, 1.0, 0.5, 0.05)
-    lam = c3.select_slider("Method A roughness λ", list(LAMBDA_GRID), 1.0)
-    seed = c3.number_input("Random seed", 0, 10_000, 1729)
+    st.caption("SYNTHETIC data. This illustrates the measurement pipeline used in the paper; it is not market "
+               "data and says nothing about the empirical result. Set the inputs, then press **Run fit**.")
+    with st.form("demo_params"):
+        c1, c2, c3 = st.columns(3)
+        atm = c1.slider("ATM implied vol (%)", 8.0, 40.0, 15.0, 0.5) / 100
+        slope = c1.slider("Skew slope (vol per unit log-moneyness)", -0.8, 0.3, -0.25, 0.05)
+        curv = c1.slider("Smile curvature", 0.0, 2.0, 0.4, 0.1)
+        d1 = c2.slider("Near expiry (days)", 14, 29, 27)
+        d2 = c2.slider("Far expiry (days)", 31, 60, 34)
+        spacing = c2.select_slider("Strike spacing (index points)", [5, 10, 25, 50], 10)
+        half = c3.slider("Quoted half-spread (index points)", 0.05, 3.0, 0.5, 0.05)
+        noise = c3.slider("Mid-price noise (share of half-spread)", 0.0, 1.0, 0.5, 0.05)
+        lam = c3.select_slider("Method A roughness λ", list(LAMBDA_GRID), 1.0)
+        seed = c3.number_input("Random seed", 0, 10_000, 1729)
+        st.form_submit_button("Run fit", type="primary")
     F, r = 6000.0, 0.045
 
     def iv_true(k):
         return np.maximum(atm + slope * k + curv * k**2, 0.03)
 
-    @st.cache_data(show_spinner="Fitting parity, Method A and SVI…")
-    def run_demo(atm, slope, curv, d1, d2, spacing, half, noise, lam, seed):
-        rng = np.random.default_rng(int(seed))
-        out = {}
-        for name, days in (("near", d1), ("far", d2)):
-            tau = days / 365
-            D = math.exp(-r * tau)
-            K = np.arange(math.ceil(0.85 * F / spacing) * spacing, 1.15 * F + 1e-9, spacing)
-            x = K / F
-            w = iv_true(np.log(x)) ** 2 * tau
-            C = D * F * norm_call(x, w)
-            P = C - D * (F - K)
-            rows = []
-            for right, prem in (("C", C), ("P", P)):
-                mid = prem + noise * half * rng.uniform(-1, 1, len(K))
-                bid, ask = mid - half, mid + half
-                keep = bid > 0.05
-                rows.append(pd.DataFrame({"right": right, "K": K[keep], "bid": bid[keep], "ask": ask[keep]}))
-            q = pd.concat(rows)
-            c, p = q[q.right == "C"].set_index("K"), q[q.right == "P"].set_index("K")
-            Ks = np.array(sorted(set(c.index) & set(p.index)))
-            fit = fit_parity(Ks, c.loc[Ks, "bid"], c.loc[Ks, "ask"], p.loc[Ks, "bid"], p.loc[Ks, "ask"], tau)
-            if not fit.ok:
-                return {"error": f"{name} expiry: parity failed ({fit.reason})"}
-            xs = np.r_[c.index.to_numpy() / fit.F, p.index.to_numpy() / fit.F]
-            mids = np.r_[((c.bid + c.ask) / 2).to_numpy() / fit.A,
-                         ((p.bid + p.ask) / 2).to_numpy() / fit.A + 1 - p.index.to_numpy() / fit.F]
-            los = np.r_[c.bid.to_numpy() / fit.A, p.bid.to_numpy() / fit.A + 1 - p.index.to_numpy() / fit.F]
-            his = np.r_[c.ask.to_numpy() / fit.A, p.ask.to_numpy() / fit.A + 1 - p.index.to_numpy() / fit.F]
-            obs = SmileObs(xs, mids, los, his, np.r_[np.zeros(len(c), bool), np.ones(len(p), bool)])
-            out[name] = {"tau": tau, "obs": obs, "F": fit.F, "D": fit.D, "D_true": D, "pairs": len(Ks),
-                         "A": fit_method_a(obs, lam), "B": fit_method_b(obs, tau)}
-        n, f_ = out["near"], out["far"]
-        sa = skew_from_curve(*curve_a(n["A"], n["tau"], f_["A"], f_["tau"])) if n["A"].ok and f_["A"].ok else None
-        sb = skew_from_curve(*curve_b(n["B"], n["tau"], f_["B"], f_["tau"])) if n["B"].ok and f_["B"].ok else None
-        # truth: the same IV smile at exactly 30 days
-        g = np.linspace(0.8, 1.2, 40001)
-        wt = iv_true(np.log(g)) ** 2 * TARGET_TAU
-        dl = 0.5 * (1 + np.vectorize(math.erf)(((-np.log(g) + wt / 2) / np.sqrt(wt)) / math.sqrt(2)))
-        xc, xp = np.interp(0.25, dl[::-1], g[::-1]), np.interp(0.75, dl[::-1], g[::-1])
-        truth = {"sk30": float(iv_true(math.log(xp)) - iv_true(math.log(xc))), "atm": float(iv_true(0.0)),
-                 "xc": float(xc), "xp": float(xp)}
-        return {"exp": out, "A": sa, "B": sb, "truth": truth}
+    # Each stage is cached on its own inputs, so re-running with unchanged settings is instant
+    # and changing only λ does not refit SVI.
+    @st.cache_data(show_spinner=False, max_entries=64)
+    def stage_quotes(atm, slope, curv, spacing, half, noise, seed, days, which):
+        rng = np.random.default_rng([int(seed), which])
+        tau = days / 365
+        D = math.exp(-r * tau)
+        K = np.arange(math.ceil(0.85 * F / spacing) * spacing, 1.15 * F + 1e-9, spacing)
+        x = K / F
+        C = D * F * norm_call(x, np.maximum(atm + slope * np.log(x) + curv * np.log(x) ** 2, 0.03) ** 2 * tau)
+        P = C - D * (F - K)
+        rows = []
+        for right, prem in (("C", C), ("P", P)):
+            mid = prem + noise * half * rng.uniform(-1, 1, len(K))
+            keep = mid - half > 0.05
+            rows.append(pd.DataFrame({"right": right, "K": K[keep], "bid": (mid - half)[keep], "ask": (mid + half)[keep]}))
+        q = pd.concat(rows)
+        c, p = q[q.right == "C"].set_index("K"), q[q.right == "P"].set_index("K")
+        Ks = np.array(sorted(set(c.index) & set(p.index)))
+        fit = fit_parity(Ks, c.loc[Ks, "bid"], c.loc[Ks, "ask"], p.loc[Ks, "bid"], p.loc[Ks, "ask"], tau)
+        if not fit.ok:
+            return {"error": f"parity failed ({fit.reason})"}
+        pk = p.index.to_numpy() / fit.F
+        return {"tau": tau, "F": fit.F, "D": fit.D, "D_true": D, "pairs": len(Ks),
+                "x": np.r_[c.index.to_numpy() / fit.F, pk],
+                "mid": np.r_[((c.bid + c.ask) / 2).to_numpy() / fit.A, ((p.bid + p.ask) / 2).to_numpy() / fit.A + 1 - pk],
+                "lo": np.r_[c.bid.to_numpy() / fit.A, p.bid.to_numpy() / fit.A + 1 - pk],
+                "hi": np.r_[c.ask.to_numpy() / fit.A, p.ask.to_numpy() / fit.A + 1 - pk],
+                "isput": np.r_[np.zeros(len(c), bool), np.ones(len(p), bool)]}
 
-    R = run_demo(atm, slope, curv, d1, d2, spacing, half, noise, lam, seed)
-    if "error" in R:
-        st.error(R["error"])
-        st.stop()
+    def obs_of(qd):
+        return SmileObs(qd["x"], qd["mid"], qd["lo"], qd["hi"], qd["isput"])
+
+    @st.cache_data(show_spinner=False, max_entries=64)
+    def stage_a(qargs, lam):
+        return fit_method_a(obs_of(stage_quotes(*qargs)), lam)
+
+    @st.cache_data(show_spinner=False, max_entries=64)
+    def stage_b(qargs):
+        qd = stage_quotes(*qargs)
+        return fit_method_b(obs_of(qd), qd["tau"], fast=True)
+
+    base = (atm, slope, curv, spacing, half, noise, int(seed))
+    qa = {"near": base + (d1, 0), "far": base + (d2, 1)}
+    # Typical cloud timings (seconds) until this session has measured its own.
+    default_t = {"quotes": 0.3, "A near": 0.6, "SVI near": 1.6, "A far": 0.6, "SVI far": 1.6, "skew": 0.5}
+    times = st.session_state.setdefault("demo_stage_times", dict(default_t))
+    steps = [("quotes", "Pricing quotes and fitting put-call parity"), ("A near", "Method A QP, near expiry"),
+             ("SVI near", "SVI fit, near expiry"), ("A far", "Method A QP, far expiry"),
+             ("SVI far", "SVI fit, far expiry"), ("skew", "Interpolating to 30 days and solving 25-delta roots")]
+    bar = st.progress(0.0, text="Starting…")
+    t_all = time.perf_counter()
+    res_q, res_a, res_b = {}, {}, {}
+    for i, (key, label) in enumerate(steps):
+        left = sum(times[k] for k, _ in steps[i:])
+        bar.progress(i / len(steps), text=f"Step {i + 1}/{len(steps)}: {label} · about {max(left, 0.5):.0f}s left")
+        t0 = time.perf_counter()
+        if key == "quotes":
+            res_q = {n: stage_quotes(*qa[n]) for n in ("near", "far")}
+            bad = [f"{n} expiry: {v['error']}" for n, v in res_q.items() if "error" in v]
+            if bad:
+                bar.empty()
+                st.error("; ".join(bad))
+                st.stop()
+        elif key.startswith("A "):
+            n = key.split()[1]
+            res_a[n] = stage_a(qa[n], lam)
+        elif key.startswith("SVI "):
+            n = key.split()[1]
+            res_b[n] = stage_b(qa[n])
+        else:
+            n_, f_ = res_q["near"], res_q["far"]
+            sa = (skew_from_curve(*curve_a(res_a["near"], n_["tau"], res_a["far"], f_["tau"]))
+                  if res_a["near"].ok and res_a["far"].ok else None)
+            sb = (skew_from_curve(*curve_b(res_b["near"], n_["tau"], res_b["far"], f_["tau"]))
+                  if res_b["near"].ok and res_b["far"].ok else None)
+        dt = time.perf_counter() - t0
+        if dt > 0.05:  # cached stages return instantly; keep the last real timing for the estimate
+            times[key] = dt
+    elapsed = time.perf_counter() - t_all
+    bar.progress(1.0, text=f"Done in {elapsed:.1f}s")
+    # truth: the same IV smile at exactly 30 days (vectorized normal CDF)
+    from scipy.special import ndtr
+
+    g = np.linspace(0.8, 1.2, 40001)
+    wt = iv_true(np.log(g)) ** 2 * TARGET_TAU
+    dl = ndtr((-np.log(g) + wt / 2) / np.sqrt(wt))
+    xc, xp = np.interp(0.25, dl[::-1], g[::-1]), np.interp(0.75, dl[::-1], g[::-1])
+    truth = {"sk30": float(iv_true(math.log(xp)) - iv_true(math.log(xc))), "atm": float(iv_true(0.0))}
+    R = {"exp": {n: {**res_q[n], "obs": obs_of(res_q[n]), "A": res_a[n], "B": res_b[n]} for n in ("near", "far")},
+         "A": sa, "B": sb, "truth": truth}
     t, sa, sb = R["truth"], R["A"], R["B"]
     st.caption("SK30 and ATM IV in vol points; the small number under each estimate is its error vs the truth.")
     m1, m2 = st.columns(2)
