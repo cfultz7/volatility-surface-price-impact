@@ -1,0 +1,55 @@
+protocol_version: "0.2-draft"
+status: draft   # becomes frozen only via `vsimpact freeze` before final outcomes
+deviations:
+  - id: D-014
+    summary: "ES flow from bbo-1s (1-second sampled BBO), not event-level mbp-1; flow variable = sampled OFI"
+markets:
+  options: {dataset: OPRA.PILLAR, parent: SPXW.OPT, schema: cbbo-1m, family: "SPXW European PM cash-settled"}
+  futures: {dataset: GLBX.MDP3, schema: bbo-1s, product: ES, roll: "Thursday 8 calendar days before third-Friday expiry, session start",
+            ofi_label: "1-second sampled best-quote imbalance", audit_schema: mbp-1, audit_dates: ["2024-02-01"]}
+session:
+  tz: America/New_York
+  common: ["09:30", "16:00"]
+  es_download_start: "08:30"
+  observations: {first: "09:40", last_offset_before_close_min: 15}
+timeline:
+  flow_window_s: 60
+  primary_horizon_min: 5
+  secondary_horizons_min: [1, 2, 10, 15]
+  surface_cutoff_every_min: 5
+  feature_compute_allowance_s: 5
+  state_cutoff_lag_s: 120
+  state_available_lag_s: 60
+  max_state_age_s: 600
+  es_quote_max_age_s: 5
+  flow_gap_s: 5
+  flow_gap_sensitivity_s: 10
+  delayed_endpoint_s: 5
+options:
+  expiry_days: [14, 90]
+  target_days: 30
+  strike_band_primary: [0.85, 1.15]
+  strike_band_expansion: [0.75, 1.25]
+  min_strikes_per_expiry: 8
+  min_parity_pairs: 4
+  max_record_age_s: 120
+  max_rel_spread: 0.50
+  sensitivities: {record_age_s: [60, 180], rel_spread: [0.25, 1.00]}
+  parity_rate_bounds: [-0.10, 0.25]
+  methodA_roughness_grid: [0, 0.0001, 0.01, 1]
+  delta_convention: undiscounted_black_forward
+  skew: "SK30 = IV(25d put) - IV(25d call), 30d constant maturity"
+inference:
+  block_sessions: 5
+  block_sensitivities: [1, 10]
+  replications: 1999
+  seed: 1729
+  secondary_family_adjustment: holm
+gates:
+  min_sessions_total: 150
+  min_dev: 70
+  min_val: 25
+  min_final: 50
+  min_session_coverage: 0.75
+  min_sessions_per_skew_group: 10
+pilot_dates: ["2024-02-01", "2024-08-01"]

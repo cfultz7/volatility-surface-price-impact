@@ -1,0 +1,9 @@
+# Streamlit Community Cloud dependencies for app/dashboard.py (versions tested locally).
+# The app imports only the pure-math modules from src/ (no Databento client, no licensed data).
+streamlit==1.67.0
+numpy==2.5.5
+pandas==3.1.1
+pyarrow==26.0.1
+scipy==1.18.1
+cvxpy==1.9.3
+plotly==7.1.0

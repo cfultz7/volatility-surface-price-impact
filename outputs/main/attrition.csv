@@ -1,0 +1,5 @@
+reason,n_cutoffs
+IV inversion failed on grid: interpolated price outside no-arbitrage bounds,1
+call 25d root: 0 crossings in support (need exactly 1),3
+no usable 30d bracket,6
+ok,19382

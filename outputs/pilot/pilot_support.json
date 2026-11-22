@@ -1,0 +1,94 @@
+{
+  "2024-02-01": {
+    "2024-03-01": {
+      "tau_days": 29.167,
+      "pairs": 121,
+      "parity_ok": true,
+      "reason": "",
+      "F": 4885.981,
+      "D": 0.995112,
+      "implied_rate": 0.06132,
+      "interval_violations": 0,
+      "iv_points": 121,
+      "iv_atm_nearest": 0.1151,
+      "strike_support": [
+        4150.0,
+        5350.0
+      ],
+      "min_call_delta": 0.0044,
+      "max_call_delta": 0.9822,
+      "call25_inside_support": true,
+      "put25_inside_support": true,
+      "raw_iv_call25": 0.1062,
+      "raw_iv_put25": 0.1339
+    },
+    "2024-03-04": {
+      "tau_days": 32.167,
+      "pairs": 72,
+      "parity_ok": true,
+      "reason": "",
+      "F": 4886.656,
+      "D": 0.994869,
+      "implied_rate": 0.05837,
+      "interval_violations": 0,
+      "iv_points": 72,
+      "iv_atm_nearest": 0.1122,
+      "strike_support": [
+        4150.0,
+        5300.0
+      ],
+      "min_call_delta": 0.0068,
+      "max_call_delta": 0.9813,
+      "call25_inside_support": true,
+      "put25_inside_support": true,
+      "raw_iv_call25": 0.1037,
+      "raw_iv_put25": 0.1312
+    }
+  },
+  "2024-08-01": {
+    "2024-08-30": {
+      "tau_days": 29.167,
+      "pairs": 242,
+      "parity_ok": true,
+      "reason": "",
+      "F": 5484.976,
+      "D": 0.995179,
+      "implied_rate": 0.06048,
+      "interval_violations": 0,
+      "iv_points": 242,
+      "iv_atm_nearest": 0.158,
+      "strike_support": [
+        4750.0,
+        6200.0
+      ],
+      "min_call_delta": 0.0028,
+      "max_call_delta": 0.9691,
+      "call25_inside_support": true,
+      "put25_inside_support": true,
+      "raw_iv_call25": 0.1403,
+      "raw_iv_put25": 0.1812
+    },
+    "2024-09-03": {
+      "tau_days": 33.167,
+      "pairs": 63,
+      "parity_ok": true,
+      "reason": "",
+      "F": 5487.551,
+      "D": 0.993742,
+      "implied_rate": 0.06908,
+      "interval_violations": 0,
+      "iv_points": 63,
+      "iv_atm_nearest": 0.1523,
+      "strike_support": [
+        4750.0,
+        6100.0
+      ],
+      "min_call_delta": 0.0056,
+      "max_call_delta": 0.9665,
+      "call25_inside_support": true,
+      "put25_inside_support": true,
+      "raw_iv_call25": 0.1334,
+      "raw_iv_put25": 0.1756
+    }
+  }
+}

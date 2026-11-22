@@ -1,0 +1,17 @@
+{
+  "label": "SYNTHETIC",
+  "null": {
+    "delta": 0.0,
+    "replications": 200,
+    "reject_rate_5pct": 0.06,
+    "mc_se": 0.016792855623746664,
+    "mean_estimate": -0.0012346530599023251
+  },
+  "alt_-0.25": {
+    "delta": -0.25,
+    "replications": 200,
+    "reject_rate_5pct": 1.0,
+    "mc_se": 0.0,
+    "mean_estimate": -0.25123465305990234
+  }
+}

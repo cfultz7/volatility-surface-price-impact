@@ -1,0 +1,9 @@
+# Provisional project-management defaults (spec section 5). Not vendor quotes.
+initial_credits_usd: 106.09       # account credits at project start (spec assumed $125)
+project_ceiling_usd: 31.09        # author decision (D-011): keep >= $75 of credits for other work
+target_usd: [25.0, 31.09]         # spec target $25-40, capped by the ceiling
+estimate_cushion: 0.20            # 20% padding on every metadata estimate
+phase_limits_usd:
+  pilot: 5.0                      # within the ceiling, not additional
+  main: 31.09
+ledger_path: data/ledger/cost_ledger.csv

@@ -1,0 +1,46 @@
+{
+  "24m": {
+    "sessions": 502,
+    "split_sessions": {
+      "dev": 188,
+      "val": 64,
+      "final": 250
+    },
+    "es_mbp1_usd": 380.32,
+    "es_mbp1_gb": 211.8,
+    "es_mbp1_usd_per_session": {
+      "median": 0.685,
+      "max": 2.467
+    },
+    "opra_definitions_usd": 13.94,
+    "opra_cbbo1m_selected_usd": 1.65,
+    "opra_cbbo1m_expanded_usd": 1.98,
+    "opra_sessions_costed": 61,
+    "total_usd": 395.9,
+    "total_padded_usd": 475.08,
+    "fits_ceiling": false,
+    "ceiling_usd": 31.09
+  },
+  "12m": {
+    "sessions": 250,
+    "split_sessions": {
+      "dev": 122,
+      "val": 43,
+      "final": 85
+    },
+    "es_mbp1_usd": 210.24,
+    "es_mbp1_gb": 116.8,
+    "es_mbp1_usd_per_session": {
+      "median": 0.771,
+      "max": 2.467
+    },
+    "opra_definitions_usd": 7.01,
+    "opra_cbbo1m_selected_usd": NaN,
+    "opra_cbbo1m_expanded_usd": NaN,
+    "opra_sessions_costed": 0,
+    "total_usd": 217.25,
+    "total_padded_usd": 260.7,
+    "fits_ceiling": false,
+    "ceiling_usd": 31.09
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "dev_sessions_used": 118,
+  "folds_scored": 1180,
+  "folds_skipped": 0,
+  "skip_reasons": {},
+  "mean_loss": {
+    "0.0": 3.7359726455517173,
+    "0.0001": 3.735746716952186,
+    "0.01": 3.7261535558182937,
+    "1.0": 3.7055448599551704
+  },
+  "mean_of_day_means": {
+    "0.0": 3.7359726455517173,
+    "0.0001": 3.735746716952185,
+    "0.01": 3.7261535558182945,
+    "1.0": 3.705544859955171
+  },
+  "selected_lambda": 1.0,
+  "rule": "argmin of mean held-out loss over all scored folds"
+}

@@ -1,0 +1,114 @@
+{
+ "day": "2024-02-01",
+ "selection": {
+  "es_contract": "ESH4",
+  "ref_close": 4876.75,
+  "n_selected": 396,
+  "expiries": [
+   "2024-03-01",
+   "2024-03-04"
+  ],
+  "band": [
+   4145.2375,
+   5608.2625
+  ]
+ },
+ "cbbo": {
+  "rows": 154044,
+  "instruments": 396,
+  "ts_recv_on_minute_boundary_frac": 1.0,
+  "ts_recv_first_ny": "2024-02-01T09:31:00-05:00",
+  "ts_recv_last_ny": "2024-02-01T15:59:00-05:00",
+  "ts_event_after_ts_recv": 0,
+  "bid_px_quantiles": [
+   0.15,
+   63.0,
+   694.96
+  ],
+  "zero_or_nan_bid_frac": 0.0029212432811404534,
+  "columns": [
+   "ts_recv",
+   "ts_event",
+   "rtype",
+   "publisher_id",
+   "instrument_id",
+   "side",
+   "price",
+   "size",
+   "flags",
+   "bid_px_00",
+   "ask_px_00",
+   "bid_sz_00",
+   "ask_sz_00",
+   "bid_pb_00",
+   "ask_pb_00",
+   "symbol"
+  ]
+ },
+ "noon_snapshot_quality": {
+  "240301": {
+   "usable_calls": 121,
+   "usable_puts": 123,
+   "parity_pairs": 121,
+   "distinct_strikes": 123
+  },
+  "240304": {
+   "usable_calls": 72,
+   "usable_puts": 75,
+   "parity_pairs": 72,
+   "distinct_strikes": 75
+  }
+ },
+ "bbo1s": {
+  "rows": 26950,
+  "columns": [
+   "ts_event",
+   "rtype",
+   "publisher_id",
+   "instrument_id",
+   "side",
+   "price",
+   "size",
+   "flags",
+   "sequence",
+   "bid_px_00",
+   "ask_px_00",
+   "bid_sz_00",
+   "ask_sz_00",
+   "bid_ct_00",
+   "ask_ct_00",
+   "symbol"
+  ],
+  "ts_recv_on_second_boundary_frac": 1.0,
+  "gap_seconds_quantiles": [
+   1.0,
+   1.0,
+   1.0,
+   2.0
+  ],
+  "n_gaps_gt_5s_in_session": 0,
+  "max_gap_s_in_session": 2.0,
+  "bid_px_median": 4901.75,
+  "spread_ticks_median": 1.0,
+  "flags_counts": {
+   "128": 26947,
+   "0": 3
+  }
+ },
+ "sampled_ofi_minutes_nonnull": 366,
+ "mbp1_audit": {
+  "rows": 4644839,
+  "complete_events": 4315606,
+  "actions": {
+   "A": 2268472,
+   "C": 1815901,
+   "T": 329233,
+   "M": 231233
+  },
+  "minutes_compared": 366,
+  "corr_sampled_vs_event": 0.9157503612408939,
+  "spearman": 0.9222921525560421,
+  "ratio_sd_sampled_to_event": 0.6349506891983487,
+  "sign_agreement": 0.9016393442622951
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "sessions_checked": 32,
+  "cutoffs_compared": 2460,
+  "cutoffs_with_early_close_expiry": 857,
+  "ok_changed": 96,
+  "max_abs_dSK30_volpts": 0.1262783465532824,
+  "mean_abs_dSK30_volpts": 0.005868425554488422,
+  "max_abs_dATMIV_volpts": 0.05420133943652705,
+  "early_close_expiry_codes": [
+    "250703",
+    "251128",
+    "251224"
+  ],
+  "ok_change_direction": {
+    "frozen_ok_to_corrected_fail": 96,
+    "fail_to_ok": 0
+  },
+  "ok_change_sessions": [
+    "2025-06-03",
+    "2025-10-29",
+    "2025-11-24"
+  ],
+  "ok_change_explanation": "All of these are states valid under the frozen convention that become unavailable under the correction, on three sessions (2025-06-03, 2025-10-29, 2025-11-24). On those days the 30-day target falls on a half-day expiry date. With the 13:00 instant that expiry drops below 30 days in the afternoon, and the next expiry needed to bracket it was not acquired, because contract selection used the frozen 16:00 convention."
+}

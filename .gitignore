@@ -1,0 +1,32 @@
+# secrets
+.env
+*.env
+# licensed / generated data
+data/
+cache/
+outputs/*/raw/
+*.dbn
+*.dbn.zst
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# licensed-data-derived, minute/quote-level artifacts (do not publish)
+outputs/main/*.parquet
+outputs/pilot/*
+!outputs/pilot/*.json
+outputs/smoke/
+outputs/main/paper_page*.png
+data/fonts/
+
+# third-party (TradingView) data, run logs and scratch output
+configs/planning_es_reference.json
+*.log
+outputs/planning_test/
+outputs/planning/selected_symbols/

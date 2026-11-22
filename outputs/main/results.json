@@ -1,0 +1,154 @@
+{
+  "status": "main analysis on sampled order flow (deviation D-014)",
+  "gates": {
+    "total": 250,
+    "dev": 122,
+    "val": 43,
+    "final": 85,
+    "pass_total": true,
+    "pass_dev": true,
+    "pass_val": true,
+    "pass_final": true,
+    "all_pass": true
+  },
+  "validation": {
+    "dev_rows": 44642,
+    "val_rows": 15556,
+    "M_PRICE_rank": 19,
+    "M_PRICE_cond": 11.099304952962232,
+    "M_FLOW_rank": 25,
+    "M_FLOW_cond": 12.979795857509863,
+    "M_SKEW_rank": 28,
+    "M_SKEW_cond": 14.846461101605453,
+    "val_oos_r2": {
+      "M_PRICE": -0.007948396692462056,
+      "M_FLOW": -0.009617550186159507,
+      "M_SKEW": -0.013253747314901254
+    },
+    "val_incremental_skew_vs_flow": -0.003601558954746009,
+    "contemporaneous_corr_ofi_rflow_dev": 0.6536587693284974
+  },
+  "final": {
+    "primary": {
+      "delta_sell": 0.11437230501026621,
+      "ci_basic": [
+        -0.5738637614478164,
+        0.6119335626062334
+      ],
+      "ci_percentile": [
+        -0.383188952585701,
+        0.8026083714683487
+      ],
+      "p_null_centered": 0.6705,
+      "se_boot": 0.2931215908989901,
+      "n_success": 1999,
+      "n_failed": 0,
+      "n_blocks_possible": 81,
+      "rows": 30730,
+      "sessions": 85,
+      "weeks": 18,
+      "sell_slope_by_z": {
+        "-1": {
+          "estimate": -0.11479049000948924,
+          "ci_basic": [
+            -0.6360110453458683,
+            0.4711662958343705
+          ]
+        },
+        "0": {
+          "estimate": -0.00041818499922302577,
+          "ci_basic": [
+            -0.34578702235008285,
+            0.3311793707843176
+          ]
+        },
+        "1": {
+          "estimate": 0.11395412001104319,
+          "ci_basic": [
+            -0.8174998182969901,
+            0.7399133449686004
+          ]
+        }
+      },
+      "high_minus_low_slope": {
+        "estimate": 0.22874461002053242,
+        "ci_basic": [
+          -1.1477275228956327,
+          1.2238671252124669
+        ]
+      }
+    },
+    "block_1": {
+      "delta_sell": 0.11437230501026621,
+      "ci_basic": [
+        -0.5586956671366368,
+        0.7282154639298071
+      ],
+      "p_null_centered": 0.7345,
+      "n_success": 1999
+    },
+    "block_10": {
+      "delta_sell": 0.11437230501026621,
+      "ci_basic": [
+        -0.5879138417419136,
+        0.5779362693820641
+      ],
+      "p_null_centered": 0.6965,
+      "n_success": 1999
+    },
+    "day_clustered": {
+      "delta_sell": 0.11437230501026621,
+      "se": 0.32155995839670576,
+      "rank": 29,
+      "cond": 19.60570091781625,
+      "n": 30730
+    },
+    "final_in_sample_r2": {
+      "M_PRICE": 0.003854276522723077,
+      "M_FLOW": 0.004165213559388259,
+      "M_SKEW": 0.004328097112668572
+    },
+    "contemporaneous_corr_ofi_rflow_final": 0.8012367228443809,
+    "scale": {
+      "sd_y5_bps": 6.912113163892337,
+      "median_spread_bps": 0.37267323901365035,
+      "ofi_sd_pretest": 11.28182989474127,
+      "skew_sd_pretest_volpts": 2.3126946719621455
+    }
+  },
+  "forecast": {
+    "incremental_1_minus_SSE_ratio": -0.00342779201879706,
+    "incremental_date_balanced": -0.003327531746713852,
+    "incremental_ci_basic": [
+      -0.005980778242101725,
+      -0.0008605634513444314
+    ],
+    "loss_diff_per_obs": -0.16510792153530893,
+    "loss_diff_ci_basic": [
+      -0.28800605406688007,
+      -0.028586038648223677
+    ],
+    "n_success": 1999,
+    "rows": 30730,
+    "pretest_rows": 60198
+  },
+  "skew_bins": {
+    "low": {
+      "rows": 4426,
+      "sessions": 26,
+      "sell_slope_bps_per_sd": 0.012207100973070067,
+      "buy_slope_bps_per_sd": -0.3432105622557543
+    },
+    "high": {
+      "rows": 3348,
+      "sessions": 17,
+      "sell_slope_bps_per_sd": 0.1096047927429018,
+      "buy_slope_bps_per_sd": -0.7863665524958239
+    },
+    "cutoffs_pretest_20_80": [
+      0.04032099342874498,
+      0.06597066841786023
+    ],
+    "gate_10_sessions_each": true
+  }
+}

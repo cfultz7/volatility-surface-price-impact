@@ -1,0 +1,388 @@
+{
+  "sessions": 40,
+  "estimate_usd": 2.5,
+  "padded_usd": 3.0,
+  "detail": [
+    {
+      "date": "2025-06-12",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0187
+    },
+    {
+      "date": "2025-07-01",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0345
+    },
+    {
+      "date": "2025-07-02",
+      "missing": [
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0745
+    },
+    {
+      "date": "2025-07-15",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0529
+    },
+    {
+      "date": "2025-07-16",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0367
+    },
+    {
+      "date": "2025-07-17",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0926
+    },
+    {
+      "date": "2025-07-18",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0722
+    },
+    {
+      "date": "2025-07-24",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0566
+    },
+    {
+      "date": "2025-07-25",
+      "missing": [
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0552
+    },
+    {
+      "date": "2025-07-28",
+      "missing": [
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0516
+    },
+    {
+      "date": "2025-07-31",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0372
+    },
+    {
+      "date": "2025-08-01",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0934
+    },
+    {
+      "date": "2025-08-06",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0256
+    },
+    {
+      "date": "2025-08-07",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0632
+    },
+    {
+      "date": "2025-08-11",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0932
+    },
+    {
+      "date": "2025-08-15",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0611
+    },
+    {
+      "date": "2025-08-21",
+      "missing": [
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0797
+    },
+    {
+      "date": "2025-08-25",
+      "missing": [
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.053
+    },
+    {
+      "date": "2025-08-27",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0669
+    },
+    {
+      "date": "2025-08-28",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0669
+    },
+    {
+      "date": "2025-09-05",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0221
+    },
+    {
+      "date": "2025-09-09",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0926
+    },
+    {
+      "date": "2025-09-16",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0668
+    },
+    {
+      "date": "2025-09-18",
+      "missing": [
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0718
+    },
+    {
+      "date": "2025-09-19",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0668
+    },
+    {
+      "date": "2025-09-22",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0527
+    },
+    {
+      "date": "2025-09-24",
+      "missing": [
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0574
+    },
+    {
+      "date": "2025-09-25",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.095
+    },
+    {
+      "date": "2025-09-26",
+      "missing": [
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.059
+    },
+    {
+      "date": "2025-09-30",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0169
+    },
+    {
+      "date": "2025-11-06",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.096
+    },
+    {
+      "date": "2025-11-20",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0965
+    },
+    {
+      "date": "2025-11-25",
+      "missing": [
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0695
+    },
+    {
+      "date": "2025-12-22",
+      "missing": [
+        "status",
+        "bbo-1s",
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0558
+    },
+    {
+      "date": "2025-12-23",
+      "missing": [
+        "cbbo-1m"
+      ],
+      "estimate_usd": 0.0193
+    },
+    {
+      "date": "2025-12-24",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0513
+    },
+    {
+      "date": "2025-12-26",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0656
+    },
+    {
+      "date": "2025-12-29",
+      "missing": [
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0666
+    },
+    {
+      "date": "2025-12-30",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.0959
+    },
+    {
+      "date": "2025-12-31",
+      "missing": [
+        "definition",
+        "ohlcv-1d",
+        "definition",
+        "status",
+        "bbo-1s",
+        "cbbo-1m (approx $0.03; needs definitions first)"
+      ],
+      "estimate_usd": 0.096
+    }
+  ]
+}

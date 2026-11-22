@@ -1,0 +1,118 @@
+{
+  "selection": {
+    "sessions": 250,
+    "contracts_mean": 483.344,
+    "contracts_min": 182,
+    "contracts_max": 1154,
+    "expiries_per_session": {
+      "2": 239,
+      "3": 11
+    }
+  },
+  "quote_quality": {
+    "cutoffs": 19392,
+    "state_ok_rate": 0.9994843234323433,
+    "mean_listed_with_record": 483.432446369637,
+    "mean_usable": 466.32095709570956,
+    "mean_stale": 12.203073432343235,
+    "mean_not_two_sided": 0.22107054455445543,
+    "mean_wide_spread": 4.687345297029703,
+    "usable_share_by_time_of_day": {
+      "09:35-10:59": 0.9774,
+      "11:00-13:59": 0.9605,
+      "14:00-close": 0.9562
+    },
+    "state_ok_by_time_of_day": {
+      "09:35-10:59": 0.9988,
+      "11:00-13:59": 0.9998,
+      "14:00-close": 0.9995
+    },
+    "usable_share_by_atm_iv_quartile": {
+      "Q1 (low IV)": 0.9518,
+      "Q2": 0.9509,
+      "Q3": 0.965,
+      "Q4 (high IV)": 0.9847
+    },
+    "corr_usable_share_atm_iv": 0.17326783670597906,
+    "failure_reasons": {
+      "no usable 30d bracket": 6,
+      "call 25d root: 0 crossings in support (need exactly 1)": 3,
+      "IV inversion failed on grid: interpolated price outside no-a": 1
+    },
+    "band_violation_mean": 1.0145773048868746e-08,
+    "band_violation_p95": 6.006602606328653e-09
+  },
+  "parity": {
+    "expiry_fits": 39636,
+    "parity_ok_rate": 0.9998738520536886,
+    "pairs_median": 79.0,
+    "interval_violations_mean": 0.0012616386162347657,
+    "share_fits_with_any_violation": 0.0010093108929878126,
+    "implied_rate_pct_quantiles_5_50_95": [
+      3.359234226730021,
+      4.585676358468643,
+      5.873341793790667
+    ],
+    "parity_fail_reasons": {
+      "only 0 paired strikes (< 4)": 3,
+      "only 2 paired strikes (< 4)": 1,
+      "only 3 paired strikes (< 4)": 1
+    }
+  },
+  "method_agreement": {
+    "common_states": 19356,
+    "corr_sk30_A_B": 0.9983609420614558,
+    "mean_diff_B_minus_A_volpts": -0.016866909389124714,
+    "mean_abs_diff_volpts": 0.07063742147027494,
+    "p95_abs_diff_volpts": 0.1839201520580605,
+    "corr_atm_iv_A_B": 0.9999368841187588,
+    "svi_dense_check_pass_rate": 0.45843880766647727
+  },
+  "costs": {
+    "by_schema_usd": {
+      "bbo-1s": 9.38,
+      "cbbo-1m": 7.056,
+      "definition": 7.893,
+      "mbp-1": 0.623,
+      "ohlcv-1d": 0.003,
+      "status": 0.0
+    },
+    "explicit_consume_total": 24.954,
+    "conservative_total": 25.48,
+    "legacy_conservative_releases": 0.526,
+    "failed_download_conservative": 1.314
+  },
+  "mde_80pct_power_two_sided_5pct": {
+    "approx_formula": "(1.96 + 0.84) x bootstrap SE",
+    "se_boot": 0.2931215908989901,
+    "mde": 0.8207404545171723
+  },
+  "full_coefficients_rows": 29,
+  "roll_days_2025": [
+    {
+      "date": "2025-03-13",
+      "es_contract": "ESM5",
+      "roll_day": true
+    },
+    {
+      "date": "2025-06-12",
+      "es_contract": "ESU5",
+      "roll_day": true
+    },
+    {
+      "date": "2025-09-11",
+      "es_contract": "ESZ5",
+      "roll_day": true
+    },
+    {
+      "date": "2025-12-11",
+      "es_contract": "ESH6",
+      "roll_day": true
+    }
+  ],
+  "sessions_scheduled": {
+    "dev": 122,
+    "val": 43,
+    "final": 85
+  }
+}
