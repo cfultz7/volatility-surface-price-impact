@@ -22,6 +22,14 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))  # use the package without installing it (e.g. on Streamlit Cloud)
 
+# Streamlit hot-reloads this script on a git push but keeps already-imported package modules in
+# memory; reload the pure-math modules so a redeploy never runs new app code against old library code.
+import importlib  # noqa: E402
+
+for _m in ("surface_impact.pricing", "surface_impact.parity", "surface_impact.surfaces", "surface_impact.skew"):
+    if _m in sys.modules:
+        importlib.reload(sys.modules[_m])
+
 args = sys.argv[1:]
 RUN = Path(args[args.index("--run") + 1]) if "--run" in args else ROOT / "outputs" / "main"
 if not RUN.is_absolute():
