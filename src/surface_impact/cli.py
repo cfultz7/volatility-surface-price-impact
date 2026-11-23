@@ -85,14 +85,13 @@ def analyze():
 def render_paper(lam: float = 1.0, smile_date: str = "2025-01-02"):
     from .diagnostics import main as diag
     from .figures import build_all
-    from .manuscript import build, latex, render
+    from .manuscript import build, render
 
     diag()
     build_all(lam, smile_date)
     md, _ = build()
-    latex(md)
     render(md)
-    typer.echo("paper/manuscript.md, paper/appendix.md, outputs/main/paper.pdf written")
+    typer.echo("paper/manuscript.md, paper/appendix.md, paper/paper.pdf written")
 
 
 @app.command()

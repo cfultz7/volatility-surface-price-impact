@@ -2,9 +2,6 @@
 
 Reads saved artifacts only (never downloads or recomputes results). The "Method demo" page runs
 the project's own measurement code on SYNTHETIC quotes, so it works without any licensed data.
-
-Local:  uv run --extra dashboard streamlit run app/dashboard.py
-Cloud:  Streamlit Community Cloud, main file `app/dashboard.py` (dependencies: app/requirements.txt)
 """
 
 from __future__ import annotations

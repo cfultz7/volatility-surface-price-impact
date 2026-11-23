@@ -1,13 +1,13 @@
 ---
 title: "Volatility Surface Skew and State-Dependent Price Responses in S&P 500 Futures"
 author: "Chantry Fultz"
-date: "2026-11-21"
+date: "2026-11-23"
 version: "Working paper v1.0, protocol v0.2 (status: main analysis on sampled order flow (deviation D-014))"
 ---
 
 # Volatility Surface Skew and State-Dependent Price Responses in S&P 500 Futures
 
-**Chantry Fultz** · Working paper, version 1.0 (protocol v0.2), generated 2026-11-21.
+**Chantry Fultz** · Working paper, version 1.0 (protocol v0.2), generated 2026-11-23.
 Status: **main analysis on sampled order flow (deviation D-014)**. Not peer reviewed.
 
 **Abstract.** We study whether option-implied downside skew conditions the short-horizon response of S&P 500 E-mini futures (ES) prices to observed order-flow pressure. Using Databento historical data for all 250 regular sessions of 2025 (250 qualifying), we build a strictly lagged 30-day 25-delta skew from consolidated SPXW option quotes every five minutes, with forwards and discount factors from put-call parity and a shape-constrained convex fit of normalized call prices. ES order flow is a 1-second sampled best-quote imbalance (a budget-driven deviation from event-level data). In the locked final period (September-December 2025, 85 sessions), the coefficient on selling pressure × standardized skew for the five-minute midquote return is 0.114 bps per standard deviation of flow and skew (95% moving-block bootstrap interval [-0.574, 0.612]; null-centered p = 0.670). The 95% block-bootstrap interval includes zero, so the primary null of no sell-pressure × skew interaction is not rejected at the 5% level. Frozen pretest forecasts show an incremental out-of-sample change 1 − SSE(M_SKEW)/SSE(M_FLOW) = -0.0034 (interval [-0.0060, -0.0009]). Estimates are conditional, observational associations; the main limitations are sampled order flow, a single year and market pair, and cross-market timing.

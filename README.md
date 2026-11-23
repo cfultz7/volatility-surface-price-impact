@@ -20,7 +20,15 @@ includes zero, so the data do not show that downside skew changes the ES respons
   −0.0034, CI [−0.0060, −0.0009]).
 
 Estimates are conditional, observational associations. They are not causal price impact or a trading
-strategy. See `paper/manuscript.md` / `outputs/main/paper.pdf` and `outputs/main/results.json`.
+strategy. Read the full paper: [`paper/paper.pdf`](paper/paper.pdf) (17 pages, with appendix).
+
+**In plain English.** When S&P 500 options make downside protection relatively expensive, do S&P
+futures prices behave differently in the minutes after a burst of selling pressure? I rebuilt a 30-day
+volatility smile from option quotes every five minutes, measured how much more downside puts cost than
+comparable calls, measured buying and selling pressure in E-mini futures, and tested whether the next
+five minutes of futures returns depend on the skew measured *before* the pressure. The answer, in a
+final period examined only after the model was frozen, is no detectable difference. This is not a
+trading strategy (midquote returns ignore costs), and it does not identify who traded or why.
 
 **Markets and design.**
 - Data: SPXW consolidated quotes (OPRA `cbbo-1m`) and the dated ES contract (CME `bbo-1s`).
@@ -48,12 +56,6 @@ strategy. See `paper/manuscript.md` / `outputs/main/paper.pdf` and `outputs/main
 
 The app downloads nothing, and the demo uses no licensed data.
 
-```powershell
-uv run --extra dashboard streamlit run app/dashboard.py
-```
-To host it on Streamlit Community Cloud, create an app from this repository with main file
-`app/dashboard.py` and Python 3.12. Dependencies come from `app/requirements.txt`.
-
 ## Repository map
 | Path | Contents |
 |---|---|
@@ -61,44 +63,19 @@ To host it on Streamlit Community Cloud, create an app from this repository with
 | `tests/` | offline synthetic tests (no billable calls) |
 | `configs/` | protocol, budget, planning reference |
 | `docs/` | protocol, literature review, novelty audit, data dictionary, decisions |
-| `paper/` | manuscript (Markdown + LaTeX source), references, summary |
+| `paper/` | the paper (PDF), its Markdown text and appendix, references |
 | `app/dashboard.py` | Streamlit dashboard over saved artifacts |
-| `outputs/main/` | derived tables, figures, freeze manifest, paper HTML/PDF |
+| `outputs/main/` | derived tables, figures, freeze manifest, results |
 | `data/` | licensed raw data and ledger (**not distributed**; gitignored) |
 
-## Setup (Windows/macOS/Linux)
-```powershell
-uv sync --extra dashboard
-uv run pytest -q
-```
-Python 3.12 via `uv`. 50 tests (synthetic, plus paper/table consistency checks against the committed
-results). The full data pipeline was run on Windows 11. The offline test suite and `vsimpact demo` pass on
-Ubuntu, Windows and macOS in GitHub Actions (`.github/workflows/ci.yml`).
-
-## Reproduce
-You need your own Databento account. Put `DATABENTO_API_KEY=...` in a local `.env` (gitignored), and
-never commit it. Offline check first (synthetic only, no key needed):
-```powershell
-uv run vsimpact demo
-```
-Full pipeline (the `acquire` step is billable and capped by `configs/budget.yaml`):
-```powershell
-uv run vsimpact plan-data 2025-01-01 2025-12-31
-uv run vsimpact acquire 2025-01-01 2025-12-31 --workers 4
-uv run vsimpact select-lambda
-uv run vsimpact measure 1.0
-uv run vsimpact analyze
-uv run python -m surface_impact.stress 1.0
-uv run python -m surface_impact.expiry_sensitivity
-uv run python -m surface_impact.lambda_bias
-uv run vsimpact render-paper
-uv run vsimpact dashboard
-```
-Outputs: `paper/manuscript.md` + `paper/appendix.md` (17-page PDF with appendix at `outputs/main/paper.pdf`),
-`outputs/main/results.json`, tables, figures.
-Every billable request is estimated with Databento's free metadata API, padded by 20%, and checked
-against the project ceiling in `configs/budget.yaml` under a file lock. Requests are cached by a
-query-parameter hash, so reruns never pay twice. This study spent about $25 of data (estimate basis).
+## Reproducibility
+- **Tests:** 52 offline tests (synthetic data, plus checks that the paper's numbers match the committed
+  results) pass on Ubuntu, Windows and macOS in GitHub Actions. They make no billable calls.
+- **Data costs:** every billable Databento request was estimated with the free metadata API, padded by
+  20%, and checked against a fixed budget under a file lock. Requests are cached, so reruns never pay
+  twice. The study used about $25 of data.
+- **Design freeze:** the model, filters and λ were frozen and hashed before final-period outcomes were
+  read (`outputs/main/design_freeze.json`). All deviations are logged in `docs/decisions.md`.
 
 ## Data rights
 Raw Databento/OPRA/CME data are licensed and are **not** included. Only code, synthetic fixtures and
